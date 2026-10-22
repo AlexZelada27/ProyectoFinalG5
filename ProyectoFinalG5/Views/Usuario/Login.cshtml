@@ -1,0 +1,116 @@
+﻿@model ProyectoFinalG5.ViewModels.LoginVM
+
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="login-container">
+
+    <div class="login-card">
+
+        <div class="text-center mb-3">
+            <img src="~/imagen/Logo.png" class="logo" alt="Logo" />
+            <h4 class="mt-2 text-dark font-weight-bold">Zone Style</h4>
+            <small class="text-secondary">Iniciar sesión</small>
+        </div>
+
+        <form method="post">
+
+            <div class="mb-3">
+                <label class="form-label text-dark">Correo electrónico</label>
+                <input asp-for="Email" class="form-control" placeholder="ejemplo@correo.com" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-dark">Contraseña</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" />
+            </div>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger text-center p-2">
+                    @ViewBag.Error
+                </div>
+            }
+
+            <button type="submit" class="btn btn-login w-100">
+                INGRESAR
+            </button>
+
+        </form>
+
+        <hr />
+
+        <div class="text-center">
+            <small class="text-dark">¿No tienes cuenta?</small><br />
+            <a href="/Usuario/Registro">Crear cuenta</a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    body {
+        /* Fondo Degradado Azul Intenso a Azul Noche */
+        background: linear-gradient(180deg, #0052d4 0%, #0040b0 45%, #002878 75%, #001238 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .login-card {
+        width: 380px;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 18px;
+        border: 1px solid #d0dbe7;
+        box-shadow: 0px 10px 30px rgba(0, 18, 56, 0.25);
+        color: #2b2b2b;
+    }
+
+        .login-card h4 {
+            color: #dc3545 !important; /* "Zone Style" en rojo oficial */
+            font-weight: 800;
+        }
+
+        .login-card .form-label,
+        .login-card small {
+            color: #212529 !important; /* Etiquetas oscuras y legibles */
+            font-weight: 500;
+        }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Botón azul profesional en formato cápsula (pill) */
+    .btn-login {
+        background: #0052d4;
+        color: white;
+        font-weight: bold;
+        border-radius: 50px;
+        border: none;
+        padding: 10px 20px;
+        box-shadow: 0 4px 12px rgba(0, 82, 212, 0.3);
+        transition: all 0.25s ease;
+    }
+
+        .btn-login:hover {
+            background: #003db0;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 61, 176, 0.4);
+        }
+</style>

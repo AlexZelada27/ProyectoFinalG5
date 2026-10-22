@@ -1,0 +1,33 @@
+﻿@model ProyectoFinalG5.Models.TipoServicio
+
+@{
+    ViewData["Title"] = "Editar Tipo de Servicio";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+
+    <div class="card shadow-lg" style="width: 420px; border-radius: 15px;">
+
+        <div class="card-body p-4">
+
+            <h3 class="text-center mb-4">Editar Tipo de Servicio</h3>
+
+            <form method="post">
+
+                <input type="hidden" asp-for="IdTipoServicio" />
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input asp-for="Nombre" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Actualizar
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

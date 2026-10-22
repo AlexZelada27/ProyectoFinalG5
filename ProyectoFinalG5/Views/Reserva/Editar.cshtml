@@ -1,0 +1,128 @@
+﻿@model ProyectoFinalG5.Models.Reserva
+
+<h2 class="mb-4">Editar Reserva</h2>
+
+<div class="card shadow p-4">
+
+    <form method="post">
+
+        <input type="hidden" name="IdReserva" value="@Model.IdReserva" />
+
+        <div class="mb-3">
+            <label>Cliente</label>
+            <select class="form-control" name="IdCliente">
+                @foreach (var c in ViewBag.Clientes)
+                {
+                    <option value="@c.IdCliente" selected="@(c.IdCliente == Model.IdCliente)">
+                        @c.Nombre
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Empleado</label>
+            <select class="form-control" name="IdEmpleado">
+                @foreach (var e in ViewBag.Empleados)
+                {
+                    <option value="@e.IdEmpleado" selected="@(e.IdEmpleado == Model.IdEmpleado)">
+                        @e.Nombre
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Fecha</label>
+            <input type="date"
+                   class="form-control"
+                   name="FechaReserva"
+                   value="@Model.FechaReserva.ToString("yyyy-MM-dd")" />
+        </div>
+
+        <div class="mb-3">
+            <label>Horario</label>
+            <select class="form-control" name="IdHorarioFijo">
+                @foreach (var h in ViewBag.Horarios)
+                {
+                    <option value="@h.IdHorarioFijo" selected="@(h.IdHorarioFijo == Model.IdHorarioFijo)">
+                        @h.HoraInicio - @h.HoraFin
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Sala</label>
+            <select class="form-control" name="IdSala">
+                @foreach (var s in ViewBag.Salas)
+                {
+                    <option value="@s.IdSala" selected="@(s.IdSala == Model.IdSala)">
+                        @s.Nombre
+                    </option>
+                }
+            </select>
+        </div>
+
+        <hr />
+
+        <h5>Servicios</h5>
+
+        @foreach (var s in ViewBag.Servicios)
+        {
+            bool check = Model.ReservaServicios.Any(x => x.IdServicio == s.IdServicio);
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       type="checkbox"
+                       name="serviciosSeleccionados"
+                       value="@s.IdServicio"
+                @(check ? "checked" : "") />
+
+                <label class="form-check-label">
+                    @s.Nombre - S/ @s.Precio
+                </label>
+            </div>
+        }
+
+        <hr />
+
+        <div class="mb-3">
+            <label>Método de Pago</label>
+            <select class="form-control" name="metodoPago">
+
+                @foreach (var m in ViewBag.MetodosPago)
+                {
+                    <option value="@m" selected="@(Model.Pago?.MetodoPago == m)">
+                        @m
+                    </option>
+                }
+
+            </select>
+        </div>
+
+        <hr />
+
+        <div class="mb-3">
+            <label>Estado</label>
+            <select class="form-control" name="Estado">
+
+                <option value="Pendiente" selected="@(Model.Estado == "Pendiente")">Pendiente</option>
+                <option value="Realizado" selected="@(Model.Estado == "Realizado")">Realizado</option>
+                <option value="Cancelado" selected="@(Model.Estado == "Cancelado")">Cancelado</option>
+
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Monto</label>
+            <input class="form-control" value="@Model.Pago?.Monto" disabled />
+        </div>
+
+        <button class="btn btn-primary">Actualizar</button>
+
+        <a href="/Reserva/Listar" class="btn btn-secondary">Cancelar</a>
+
+    </form>
+
+</div>

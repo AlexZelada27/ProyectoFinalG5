@@ -1,0 +1,36 @@
+﻿@model ProyectoFinalG5.Models.Rol
+
+@{
+    ViewData["Title"] = "Eliminar Rol";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+
+    <div class="card shadow-lg" style="width: 400px; border-radius: 15px;">
+
+        <div class="card-body text-center p-4">
+
+            <h4 class="text-danger mb-3">Eliminar Rol</h4>
+
+            <p>¿Estás seguro de eliminar este rol?</p>
+
+            <h5 class="mb-4">@Model.NombreRol</h5>
+
+            <form method="post">
+
+                <input type="hidden" asp-for="IdRol" />
+
+                <button type="submit" class="btn btn-danger w-100 mb-2">
+                    Eliminar
+                </button>
+
+                <a href="/Rol/Listar" class="btn btn-secondary w-100">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

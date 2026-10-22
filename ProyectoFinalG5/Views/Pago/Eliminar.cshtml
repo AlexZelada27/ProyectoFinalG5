@@ -1,0 +1,28 @@
+﻿@model ProyectoFinalG5.Models.Pago
+
+<h2 class="mb-4 text-danger">Eliminar Pago</h2>
+
+<div class="card shadow p-4">
+
+    <h5>¿Estás seguro que deseas eliminar este pago?</h5>
+
+    <hr />
+
+    <p><strong>Monto:</strong> @Model.Monto</p>
+    <p><strong>Método:</strong> @Model.MetodoPago</p>
+
+    <form method="post">
+
+        <input type="hidden" name="IdPago" value="@Model.IdPago" />
+
+        <button type="submit" class="btn btn-danger">
+            Eliminar
+        </button>
+
+        <a href="/Pago/Listar" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>

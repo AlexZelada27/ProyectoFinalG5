@@ -1,0 +1,423 @@
+﻿@model ProyectoFinalG5.Models.Pago
+
+
+<style>
+
+    .pago-container {
+        max-width: 550px;
+        margin: 50px auto;
+    }
+
+
+    .pago-card {
+        border-radius: 15px;
+        border: none;
+    }
+
+
+    .titulo-pago {
+        color: #6f42c1;
+        font-weight: 700;
+    }
+
+
+    .btn-purple {
+        background-color: #6f42c1;
+        color: white;
+        border-radius: 8px;
+        padding: 10px 25px;
+        border: none;
+    }
+
+
+        .btn-purple:hover {
+            background-color: #59339d;
+            color: white;
+        }
+
+
+    .btn-outline-purple {
+        border: 2px solid #6f42c1;
+        color: #6f42c1;
+        border-radius: 8px;
+        padding: 10px 25px;
+    }
+
+
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+
+    .extra-data {
+        display: none;
+        background: #f8f5ff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+    }
+
+</style>
+
+
+
+<div class="pago-container">
+
+
+    <div class="card shadow pago-card p-4">
+
+
+        <div class="text-center mb-4">
+
+            <h2 class="titulo-pago">
+                💳 Nuevo Pago
+            </h2>
+
+            <p class="text-muted">
+                Complete los datos de pago
+            </p>
+
+        </div>
+
+
+
+
+        <form method="post">
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label fw-bold">
+                    Monto
+                </label>
+
+
+                <input class="form-control"
+                       asp-for="Monto"
+                       value="100"
+                       readonly />
+
+
+            </div>
+
+
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label fw-bold">
+                    Método de Pago
+                </label>
+
+
+                <select class="form-control"
+                        asp-for="MetodoPago"
+                        id="metodoPago"
+                        onchange="mostrarCampos()">
+
+
+                    <option value="">
+                        Seleccione método
+                    </option>
+
+
+                    <option value="Efectivo">
+                        💵 Efectivo
+                    </option>
+
+
+                    <option value="Yape">
+                        📱 Yape
+                    </option>
+
+
+                    <option value="Plin">
+                        📱 Plin
+                    </option>
+
+
+                    <option value="Transferencia">
+                        🏦 Transferencia
+                    </option>
+
+
+                    <option value="Tarjeta">
+                        💳 Tarjeta
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+
+
+
+
+
+            <!-- YAPE / PLIN -->
+
+
+            <div id="yapePlin" class="extra-data">
+
+
+                <h6>
+                    Datos de aprobación
+                </h6>
+
+
+                <label>
+                    Código de aprobación
+                </label>
+
+
+                <input type="text"
+                       class="form-control"
+                       name="CodigoAprobacion"
+                       placeholder="Ingrese código">
+
+
+            </div>
+
+
+
+
+
+
+
+            <!-- TRANSFERENCIA -->
+
+
+            <div id="transferencia" class="extra-data">
+
+
+                <h6>
+                    Datos de transferencia
+                </h6>
+
+
+
+                <label>
+                    Banco
+                </label>
+
+
+                <input type="text"
+                       class="form-control mb-2"
+                       name="Banco"
+                       placeholder="Nombre del banco">
+
+
+
+                <label>
+                    Número de operación
+                </label>
+
+
+                <input type="text"
+                       class="form-control"
+                       name="NumeroOperacion"
+                       placeholder="Número de operación">
+
+
+
+            </div>
+
+
+
+
+
+
+
+            <!-- TARJETA -->
+
+
+            <div id="tarjeta" class="extra-data">
+
+
+                <h6>
+                    Datos de tarjeta
+                </h6>
+
+
+
+                <label>
+                    Número de tarjeta
+                </label>
+
+
+                <input type="text"
+                       class="form-control mb-2"
+                       name="NumeroTarjeta"
+                       placeholder="XXXX XXXX XXXX XXXX">
+
+
+
+
+
+                <label>
+                    Titular de tarjeta
+                </label>
+
+
+                <input type="text"
+                       class="form-control mb-2"
+                       name="TitularTarjeta"
+                       placeholder="Nombre del titular">
+
+
+
+
+
+                <label>
+                    Fecha de vencimiento
+                </label>
+
+
+                <input type="month"
+                       class="form-control mb-2"
+                       name="FechaVencimiento">
+
+
+
+
+
+                <label>
+                    CVV
+                </label>
+
+
+                <input type="password"
+                       class="form-control"
+                       name="CVV"
+                       placeholder="123">
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="d-flex justify-content-between mt-4">
+
+
+                <a href="/Pago/Listar"
+                   class="btn btn-outline-purple">
+
+                    Cancelar
+
+                </a>
+
+
+
+                <button type="submit"
+                        class="btn btn-purple">
+
+                    Confirmar Pago
+
+                </button>
+
+
+            </div>
+
+
+
+        </form>
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+    function mostrarCampos(){
+
+
+        let metodo = document.getElementById("metodoPago").value;
+
+
+        document.getElementById("yapePlin").style.display="none";
+        document.getElementById("transferencia").style.display="none";
+        document.getElementById("tarjeta").style.display="none";
+
+
+
+        if(metodo=="Yape" || metodo=="Plin"){
+
+            document.getElementById("yapePlin").style.display="block";
+
+        }
+
+
+
+        if(metodo=="Transferencia"){
+
+            document.getElementById("transferencia").style.display="block";
+
+        }
+
+
+
+        if(metodo=="Tarjeta"){
+
+            document.getElementById("tarjeta").style.display="block";
+
+        }
+
+
+    }
+
+
+
+</script>
+
+<!-- COMPROBANTE DE PAGO -->
+
+<div class="extra-data" style="display:block; margin-top:20px;">
+
+
+    <h6>
+        📎 Comprobante de Pago
+    </h6>
+
+
+    <p class="text-muted">
+        Adjunte una captura o archivo que confirme su pago.
+    </p>
+
+
+
+    <label class="form-label">
+        Subir comprobante
+    </label>
+
+
+    <input type="file"
+           class="form-control"
+           name="Comprobante"
+           accept="image/*,.pdf"
+           required />
+
+
+
+</div>

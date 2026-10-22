@@ -1,0 +1,138 @@
+﻿@model List<ProyectoFinalG5.Models.Usuario>
+
+<style>
+    /* Título "Zone Style" en Rojo Oficial */
+    .titulo {
+        color: #dc3545;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    /* Tarjeta contenedora limpia */
+    .card-usuarios {
+        background: #ffffff;
+        border: 1px solid #d0dbe7;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 18, 56, 0.25);
+        padding: 25px;
+    }
+
+    /* Cabecera de la tabla en Negro Elegante */
+    .table thead th {
+        background: #121212 !important;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        border: none;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+        text-align: center;
+        color: #2b2b2b;
+    }
+
+    /* Efecto hover suave en tono celeste/azul tenue */
+    .table tbody tr:hover {
+        background: #eef4fc;
+        transition: .3s;
+    }
+
+    /* Badge del Rol en Azul Profesional Suave */
+    .rol-badge {
+        background: #c1d7f0;
+        color: #002878;
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-weight: 700;
+        display: inline-block;
+    }
+
+    .email {
+        font-weight: 600;
+        color: #2b2b2b;
+    }
+
+    /* Botón Eliminar en Cápsula */
+    .btn-eliminar {
+        background: #dc3545;
+        color: white;
+        border-radius: 50px;
+        padding: 8px 18px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s ease;
+        display: inline-block;
+    }
+
+        .btn-eliminar:hover {
+            background: #bb2d3b;
+            color: white;
+            transform: translateY(-1px);
+        }
+</style>
+
+<div class="container mt-4">
+
+    <h2 class="titulo mb-4">
+        👤 Gestión de Usuarios
+    </h2>
+
+    <div class="card card-usuarios">
+
+        <table class="table table-hover mb-0">
+
+            <thead>
+                <tr>
+                    <th>Correo electrónico</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <span class="email">
+                                📧 @item.Email
+                            </span>
+                        </td>
+
+                        <td>
+                            @{
+                                var roles = ViewBag.Roles as List<ProyectoFinalG5.Models.Rol>;
+                                var rol = roles?.FirstOrDefault(r => r.IdRol == item.IdRol);
+                            }
+
+                            @if (rol != null)
+                            {
+                                <span class="rol-badge">
+                                    🔑 @rol.NombreRol
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">
+                                    Rol no encontrado
+                                </span>
+                            }
+                        </td>
+
+                        <td>
+                            <a class="btn-eliminar"
+                               href="/Usuario/Eliminar/@item.IdUsuario"
+                               onclick="return confirm('¿Estás seguro de eliminar a este usuario?');">
+                                🗑 Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

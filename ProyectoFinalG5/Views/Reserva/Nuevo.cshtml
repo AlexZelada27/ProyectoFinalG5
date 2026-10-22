@@ -1,0 +1,310 @@
+﻿@model ProyectoFinalG5.Models.Reserva
+
+<style>
+    /* Títulos */
+    .titulo {
+        color: #121212;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    /* Clase exclusiva para poner en negro los emojis de usuario y música */
+    .icono-negro {
+        filter: grayscale(100%) brightness(0);
+        display: inline-block;
+        margin-right: 6px;
+    }
+
+    .card-reserva {
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        background-color: #ffffff;
+    }
+
+    .section-title {
+        color: #121212;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+        border: 1px solid #ced4da;
+    }
+
+        .form-control:focus {
+            border-color: #212529;
+            box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.15);
+        }
+
+    label {
+        font-weight: 600;
+        color: #212529;
+    }
+
+    /* Caja de Servicios y Checkboxes */
+    .servicios-box {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid #e9ecef;
+    }
+
+    .form-check {
+        padding: 10px 10px 10px 35px;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+    }
+
+        .form-check:hover {
+            background: #e9ecef;
+        }
+
+    .form-check-label {
+        color: #000000 !important;
+        font-weight: 600;
+    }
+
+        .form-check-label small {
+            color: #495057 !important;
+            font-weight: 500;
+        }
+
+    /* Caja Total en Negro */
+    .total-box {
+        background: #121212 !important;
+        color: #ffffff !important;
+        border-radius: 12px;
+        padding: 15px;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    /* Botón Guardar (Verde Profesional / Estilo Cápsula) */
+    .btn-purple {
+        background: #198754 !important;
+        color: white !important;
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-weight: bold;
+        border: none;
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+        transition: all 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .btn-purple:hover {
+            background: #146c43 !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(25, 135, 84, 0.4);
+        }
+
+    /* Botón Cancelar / Volver */
+    .btn-cancelar {
+        background: #6c757d;
+        color: white !important;
+        border-radius: 50px;
+        padding: 12px 28px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.25s ease;
+        display: inline-block;
+    }
+
+        .btn-cancelar:hover {
+            background: #5c636a;
+            transform: translateY(-2px);
+        }
+</style>
+
+<div class="container mt-4">
+
+    <!-- Calendario y Pago se quedan con su diseño original -->
+    <h2 class="titulo mb-4">
+        📅 Nueva Reserva
+    </h2>
+
+    <div class="card card-reserva">
+
+        <form method="post">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <!-- Usuario en negro -->
+            <h5 class="section-title">
+                <span></span>Datos de Reserva
+            </h5>
+
+            <div class="mb-3">
+                <label>
+                    Cliente
+                </label>
+                <select class="form-control" name="IdCliente" required>
+                    <option value="">Seleccione cliente</option>
+                    @foreach (var c in ViewBag.Clientes)
+                    {
+                        <option value="@c.IdCliente">
+                            @c.Nombre
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>
+                    Empleado
+                </label>
+                <select class="form-control" name="IdEmpleado" required>
+                    <option value="">Seleccione empleado</option>
+                    @foreach (var e in ViewBag.Empleados)
+                    {
+                        <option value="@e.IdEmpleado">
+                            @e.Nombre
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>
+                    Fecha de Reserva
+                </label>
+                <input type="date" class="form-control" name="FechaReserva" required />
+            </div>
+
+            <div class="mb-3">
+                <label>
+                    Horario
+                </label>
+                <select class="form-control" name="IdHorarioFijo" required>
+                    <option value="">Seleccione horario</option>
+                    @foreach (var h in ViewBag.Horarios)
+                    {
+                        <option value="@h.IdHorarioFijo">
+                            @h.HoraInicio.ToString(@"hh\:mm") - @h.HoraFin.ToString(@"hh\:mm")
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>
+                    Sala de Estudio
+                </label>
+                <select class="form-control" name="IdSala" required>
+                    <option value="">Seleccione sala</option>
+                    @foreach (var s in ViewBag.Salas)
+                    {
+                        <option value="@s.IdSala">
+                            @s.Nombre
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <hr>
+
+            <!-- Música en negro -->
+            <h5 class="section-title">
+                <span></span>Servicios disponibles
+            </h5>
+
+            <div class="servicios-box">
+                @foreach (var s in ViewBag.Servicios)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input servicioCheck"
+                               type="checkbox"
+                               name="serviciosSeleccionados"
+                               value="@s.IdServicio"
+                               data-precio="@s.Precio" />
+
+                        <label class="form-check-label">
+                            @s.Nombre
+                            <br>
+                            <small>S/ @s.Precio</small>
+                        </label>
+                    </div>
+                }
+            </div>
+
+            <hr>
+
+            <h5 class="section-title">
+                💳 Pago
+            </h5>
+
+            <div class="mb-3">
+                <label>
+                    Total a pagar
+                </label>
+                <input type="text"
+                       id="total"
+                       class="form-control total-box"
+                       readonly
+                       value="0.00" />
+            </div>
+
+            <div class="mb-3">
+                <label>
+                    Método de Pago
+                </label>
+                <select class="form-control" name="metodoPago" required>
+                    <option value="">Seleccione método</option>
+                    @foreach (var m in ViewBag.MetodosPago)
+                    {
+                        <option value="@m">
+                            @m
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label>
+                    Estado
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="Estado"
+                       value="Pendiente"
+                       readonly />
+            </div>
+
+            <button type="submit" class="btn-purple">
+                Guardar Reserva
+            </button>
+
+            <a href="/Reserva/Listar" class="btn-cancelar ms-2">
+                Volver
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+<script>
+    const checks = document.querySelectorAll(".servicioCheck");
+    const total = document.getElementById("total");
+
+    function calcularTotal() {
+        let suma = 0;
+        checks.forEach(c => {
+            if (c.checked) {
+                suma += parseFloat(c.dataset.precio);
+            }
+        });
+        total.value = suma.toFixed(2);
+    }
+
+    checks.forEach(c => {
+        c.addEventListener("change", calcularTotal);
+    });
+</script>

@@ -1,0 +1,185 @@
+﻿@model List<ProyectoFinalG5.Models.Servicio>
+
+@{
+    ViewData["Title"] = "Servicios";
+}
+
+<style>
+    /* Título "Zone Style" en Rojo Oficial */
+    .titulo {
+        color: #dc3545;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    /* Tarjeta contenedora limpia */
+    .card-servicios {
+        background: #ffffff;
+        border: 1px solid #d0dbe7;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 18, 56, 0.25);
+        padding: 25px;
+    }
+
+    /* Botón Principal (+ Nuevo Servicio) en Azul Cápsula */
+    .btn-purple {
+        background: #0052d4;
+        color: white;
+        border-radius: 50px;
+        padding: 10px 22px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0, 82, 212, 0.3);
+        transition: all 0.25s ease;
+        display: inline-block;
+    }
+
+        .btn-purple:hover {
+            background: #003db0;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 61, 176, 0.4);
+        }
+
+    /* Cabecera de la tabla en Negro Elegante */
+    .table thead th {
+        background: #121212 !important;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        border: none;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+        text-align: center;
+        color: #2b2b2b;
+    }
+
+    /* Efecto hover suave en tono celeste/azul tenue */
+    .table tbody tr:hover {
+        background: #eef4fc;
+        transition: .3s;
+    }
+
+    /* Precios en Azul Profesional */
+    .precio {
+        color: #0052d4;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    /* Botón Editar en Cápsula */
+    .btn-editar {
+        background: #ffc107;
+        color: #212529;
+        border-radius: 50px;
+        padding: 7px 18px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s ease;
+        display: inline-block;
+    }
+
+        .btn-editar:hover {
+            background: #e0a800;
+            color: #212529;
+            transform: translateY(-1px);
+        }
+
+    /* Botón Eliminar en Cápsula */
+    .btn-eliminar {
+        background: #dc3545;
+        color: white;
+        border-radius: 50px;
+        padding: 7px 18px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s ease;
+        display: inline-block;
+    }
+
+        .btn-eliminar:hover {
+            background: #bb2d3b;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+    .header-panel {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <div class="header-panel">
+
+        <h3 class="titulo">
+            🎵 Gestión de Servicios
+        </h3>
+
+        <a href="/Servicio/Nuevo" class="btn-purple">
+            + Nuevo Servicio
+        </a>
+
+    </div>
+
+    <div class="card card-servicios">
+
+        <table class="table table-hover mb-0">
+
+            <thead>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                🎧 <strong>@item.Nombre</strong>
+                            </td>
+
+                            <td>
+                                <span class="precio">
+                                    S/ @item.Precio.ToString("0.00")
+                                </span>
+                            </td>
+
+                            <td>
+                                <a href="/Servicio/Editar/@item.IdServicio" class="btn-editar me-1">
+                                    ✏ Editar
+                                </a>
+
+                                <a href="/Servicio/Eliminar/@item.IdServicio" class="btn-eliminar"
+                                   onclick="return confirm('¿Deseas eliminar este servicio?');">
+                                    🗑 Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" class="text-muted py-4">
+                            No hay servicios registrados
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

@@ -1,0 +1,38 @@
+﻿@model ProyectoFinalG5.Models.Empleado
+
+@{
+    ViewData["Title"] = "Editar Empleado";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+
+    <div class="card shadow-lg" style="width: 420px; border-radius: 15px;">
+
+        <div class="card-body p-4">
+
+            <h3 class="text-center mb-4">Editar Empleado</h3>
+
+            <form method="post">
+
+                <input type="hidden" asp-for="IdEmpleado" />
+
+                <div class="mb-3">
+                    <label class="form-label">Nombres</label>
+                    <input asp-for="Nombre" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Cargo</label>
+                    <input asp-for="Cargo" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Actualizar
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

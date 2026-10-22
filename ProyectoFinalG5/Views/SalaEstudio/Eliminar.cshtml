@@ -1,0 +1,40 @@
+﻿@model ProyectoFinalG5.Models.SalaEstudio
+
+@{
+    ViewData["Title"] = "Eliminar Sala";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+
+    <div class="card shadow-lg" style="width: 420px; border-radius: 15px;">
+
+        <div class="card-body text-center p-4">
+
+            <h4 class="text-danger mb-3">Eliminar Sala de Estudio</h4>
+
+            <p>¿Estás seguro de eliminar esta sala?</p>
+
+            <div class="mb-3">
+                <strong>Nombre:</strong> @Model.Nombre <br />
+                <strong>Dirección:</strong> @Model.Direccion <br />
+                <strong>Capacidad:</strong> @Model.Capacidad
+            </div>
+
+            <form method="post">
+
+                <input type="hidden" asp-for="IdSala" />
+
+                <button type="submit" class="btn btn-danger w-100 mb-2">
+                    Eliminar
+                </button>
+
+                <a href="/SalaEstudio/Listar" class="btn btn-secondary w-100">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

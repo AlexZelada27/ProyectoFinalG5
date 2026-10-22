@@ -1,0 +1,79 @@
+﻿@model ProyectoFinalG5.Models.Reserva
+
+@{
+    var rol = Context.Session.GetString("Rol");
+
+    if (rol == "3")
+    {
+        <div class="alert alert-danger">
+            No tienes permisos para eliminar reservas.
+        </div>
+        return;
+    }
+}
+
+<h2 class="mb-4 text-danger">Eliminar Reserva</h2>
+
+<div class="card shadow p-4">
+
+    <h5>¿Estás seguro que deseas eliminar esta reserva?</h5>
+
+    <hr />
+
+    <p><strong>Cliente:</strong> @Model.Cliente?.Nombre</p>
+    <p><strong>Empleado:</strong> @Model.Empleado?.Nombre</p>
+
+    <p>
+        <strong>Servicios:</strong>
+        @if (Model.ReservaServicios != null && Model.ReservaServicios.Any())
+        {
+            foreach (var s in Model.ReservaServicios)
+            {
+                <span class="badge bg-info">
+                    @s.Servicio?.Nombre
+                </span>
+            }
+        }
+        else
+        {
+            <span>No hay servicios asociados</span>
+        }
+    </p>
+
+    <p>
+        <strong>Horario:</strong>
+        @Model.HorarioFijo?.HoraInicio.ToString(@"hh\:mm")
+        -
+        @Model.HorarioFijo?.HoraFin.ToString(@"hh\:mm")
+    </p>
+
+    <p><strong>Sala:</strong> @Model.SalaEstudio?.Nombre</p>
+
+    <p>
+        <strong>Total Pago:</strong>
+        @{
+            var total = Model.ReservaServicios?.Sum(x => x.Precio) ?? 0;
+        }
+        S/ @total.ToString("0.00")
+    </p>
+
+    <p><strong>Pago:</strong> S/ @Model.Pago?.Monto</p>
+
+    <form method="post">
+
+        <input type="hidden" name="IdReserva" value="@Model.IdReserva" />
+
+        @if (rol == "1" || rol == "2")
+        {
+            <button type="submit" class="btn btn-danger">
+                Eliminar
+            </button>
+        }
+
+        <a href="/Reserva/Listar" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>

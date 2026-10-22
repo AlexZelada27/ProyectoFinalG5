@@ -1,0 +1,27 @@
+﻿@model ProyectoFinalG5.Models.Pago
+
+<h2 class="mb-4">Editar Pago</h2>
+
+<form method="post">
+
+    <input type="hidden" name="IdPago" value="@Model.IdPago" />
+
+    <div class="mb-3">
+        <label>Monto</label>
+        <input class="form-control" name="Monto" value="@Model.Monto" />
+    </div>
+
+    <div class="mb-3">
+        <label>Método</label>
+        <input class="form-control" name="MetodoPago" value="@Model.MetodoPago" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Actualizar
+    </button>
+
+    <a href="/Pago/Listar" class="btn btn-secondary">
+        Cancelar
+    </a>
+
+</form>

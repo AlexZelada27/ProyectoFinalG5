@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ProyectoG5</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ProyectoG5.styles.css" asp-append-version="true" />
+
+    <style>
+            body {
+                min-height: 100vh;
+                margin: 0;
+                /* Degradado idéntico a la imagen: Azul eléctrico/brillante superior a Azul Noche profundo en la base */
+                background: linear-gradient(180deg, #0052d4 0%, #0040b0 45%, #002878 75%, #001238 100%);
+                background-attachment: fixed;
+                color: #ffffff;
+            }
+
+            .navbar {
+                background-color: rgba(255, 255, 255, 0.95) !important;
+                border-bottom: 2px solid #0052d4 !important;
+                backdrop-filter: blur(5px);
+            }
+
+            /* "Zone Style" en Rojo */
+            .navbar-brand {
+                font-weight: 800;
+                color: #dc3545 !important;
+                letter-spacing: 0.5px;
+                transition: color 0.2s ease;
+            }
+
+                .navbar-brand:hover {
+                    color: #bd2130 !important;
+                }
+
+            /* Estilo de botones en la barra de navegación */
+            .btn-nav {
+                color: #2b2b2b !important;
+                font-weight: 600;
+                padding: 8px 18px !important;
+                border-radius: 50px;
+                transition: all 0.25s ease;
+                text-decoration: none;
+                display: inline-block;
+            }
+
+                .btn-nav:hover {
+                    background-color: #0052d4;
+                    color: #ffffff !important;
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 10px rgba(0, 82, 212, 0.3);
+                }
+
+            /* Botón de Cerrar Sesión */
+            .btn-nav-logout {
+                color: #dc3545 !important;
+                font-weight: 600;
+                padding: 8px 18px !important;
+                border-radius: 50px;
+                border: 1px solid #f5c2c7;
+                background-color: #f8d7da;
+                transition: all 0.25s ease;
+                text-decoration: none;
+                display: inline-block;
+            }
+
+                .btn-nav-logout:hover {
+                    background-color: #dc3545;
+                    color: #ffffff !important;
+                    border-color: #dc3545;
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+                }
+
+            main {
+                min-height: 75vh;
+                padding-top: 20px;
+                padding-bottom: 30px;
+            }
+
+            .card {
+                background-color: #ffffff;
+                color: #2b2b2b;
+                border: 1px solid #d0dbe7;
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(0, 18, 56, 0.25);
+            }
+
+            .btn-primary {
+                background-color: #0052d4;
+                border-color: #0052d4;
+            }
+
+                .btn-primary:hover {
+                    background-color: #003db0;
+                    border-color: #003db0;
+                }
+
+            /* MODIFICADO: Footer sin fondo claro ni borde superior */
+            .footer {
+                padding: 20px 0;
+                background-color: transparent !important;
+                border-top: none !important;
+                color: #b0c4de !important;
+            }
+
+                .footer .container {
+                    text-align: center;
+                }
+
+            .modal {
+                z-index: 2000;
+            }
+
+            .modal-backdrop {
+                z-index: 1500;
+            }
+
+            body.modal-open {
+                overflow: auto !important;
+                padding-right: 0 !important;
+            }
+
+            @@media (max-width: 576px) {
+                main {
+                    padding-top: 10px;
+                }
+
+                .navbar-brand {
+                    font-size: 1.1rem;
+                }
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light shadow-sm mb-3">
+            <div class="container-fluid">
+
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    Zone Style
+                </a>
+
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#menuPrincipal"
+                        aria-controls="menuPrincipal"
+                        aria-expanded="false"
+                        aria-label="Abrir menú">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse" id="menuPrincipal">
+
+                    <ul class="navbar-nav flex-grow-1 gap-2">
+
+                        @if (Context.Session.GetString("Rol") == "1")
+                        {
+                            <li class="nav-item">
+                                <a class="btn-nav" href="/Admin/Index">
+                                    Panel de administración
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+                    <ul class="navbar-nav">
+
+                        @if (Context.Session.GetString("Rol") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="btn-nav-logout" href="/Usuario/Logout">
+                                    Cerrar sesión
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn-nav" href="/Usuario/Login">
+                                    Iniciar sesión
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="btn-nav" href="/Usuario/Registro">
+                                    Registrarse
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            &copy; 2026 - Zone Style Studio
+        </div>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

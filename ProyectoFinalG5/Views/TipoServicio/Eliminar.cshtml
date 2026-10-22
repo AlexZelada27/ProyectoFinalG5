@@ -1,0 +1,36 @@
+﻿@model ProyectoFinalG5.Models.TipoServicio
+
+@{
+    ViewData["Title"] = "Eliminar Tipo de Servicio";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+
+    <div class="card shadow-lg" style="width: 420px; border-radius: 15px;">
+
+        <div class="card-body text-center p-4">
+
+            <h4 class="text-danger mb-3">Eliminar Tipo de Servicio</h4>
+
+            <p>¿Estás seguro de eliminar este tipo de servicio?</p>
+
+            <h5 class="mb-4">@Model.Nombre</h5>
+
+            <form method="post">
+
+                <input type="hidden" asp-for="IdTipoServicio" />
+
+                <button type="submit" class="btn btn-danger w-100 mb-2">
+                    Eliminar
+                </button>
+
+                <a href="/TipoServicio/Listar" class="btn btn-secondary w-100">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

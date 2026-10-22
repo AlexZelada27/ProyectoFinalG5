@@ -1,0 +1,40 @@
+﻿@model ProyectoFinalG5.Models.Cliente
+
+@{
+    ViewData["Title"] = "Nuevo Cliente";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+
+    <div class="card shadow-lg" style="width: 420px; border-radius: 15px;">
+
+        <div class="card-body p-4">
+
+            <h3 class="text-center mb-4">Nuevo Cliente</h3>
+
+            <form method="post">
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input name="Nombre" class="form-control" placeholder="Ingrese su nombre" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Teléfono</label>
+                    <input name="Telefono" class="form-control" placeholder="Ingrese su teléfono" />
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">
+                    Guardar Cliente
+                </button>
+
+                <a href="/Cliente/Listar" class="btn btn-secondary w-100 mt-2">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

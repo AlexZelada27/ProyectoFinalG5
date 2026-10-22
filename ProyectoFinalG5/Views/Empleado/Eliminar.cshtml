@@ -1,0 +1,36 @@
+﻿@model ProyectoFinalG5.Models.Empleado
+
+@{
+    ViewData["Title"] = "Eliminar Empleado";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+
+    <div class="card shadow-lg" style="width: 400px; border-radius: 15px;">
+
+        <div class="card-body text-center p-4">
+
+            <h4 class="mb-3 text-danger">Eliminar Empleado</h4>
+
+            <p>¿Estás seguro de eliminar a:</p>
+
+            <h5 class="mb-4">@Model.Nombre</h5>
+
+            <form method="post">
+
+                <input type="hidden" asp-for="IdEmpleado" />
+
+                <button type="submit" class="btn btn-danger w-100 mb-2">
+                    Eliminar
+                </button>
+
+                <a href="/Empleado/Listar" class="btn btn-secondary w-100">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,203 @@
+﻿@model List<ProyectoFinalG5.Models.Pago>
+
+<style>
+    /* Título "Zone Style" en Rojo Oficial */
+    .titulo {
+        color: #dc3545;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    /* Tarjeta contenedora limpia */
+    .card-pagos {
+        background: #ffffff;
+        border: 1px solid #d0dbe7;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 18, 56, 0.25);
+        padding: 25px;
+    }
+
+    /* Caja de Filtros en tono Azul Claro Suave */
+    .filtro-box {
+        background: #eef4fc;
+        border: 1px solid #d0dbe7;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+    }
+
+    .form-control {
+        border-radius: 50px;
+        padding: 10px 18px;
+        border: 1px solid #ced4da;
+    }
+
+    /* Botón Principal (Filtrar) en Azul Cápsula */
+    .btn-purple {
+        background: #0052d4;
+        color: white;
+        border-radius: 50px;
+        padding: 9px 25px;
+        border: none;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0, 82, 212, 0.3);
+        transition: all 0.25s ease;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+        .btn-purple:hover {
+            background: #003db0;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 61, 176, 0.4);
+        }
+
+    /* Botón Secundario (Limpiar) en Cápsula */
+    .btn-secondary-custom {
+        background: #6c757d;
+        color: white;
+        border-radius: 50px;
+        padding: 9px 25px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.25s ease;
+        display: inline-block;
+    }
+
+        .btn-secondary-custom:hover {
+            background: #5c636a;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+    /* Cabecera de la tabla en Negro Elegante */
+    .table thead th {
+        background: #121212 !important;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        border: none;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+        text-align: center;
+        color: #2b2b2b;
+    }
+
+    /* Efecto hover suave en tono celeste/azul tenue */
+    .table tbody tr:hover {
+        background: #eef4fc;
+        transition: .3s;
+    }
+
+    /* Monto destacado en verde éxito */
+    .monto {
+        color: #198754;
+        font-weight: 800;
+        font-size: 16px;
+    }
+
+    /* Etiqueta / Píldora del Método de Pago en Azul Profesional Suave */
+    .metodo {
+        background: #c1d7f0;
+        color: #002878;
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-weight: 700;
+        display: inline-block;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="titulo">
+            💳 Lista de Pagos
+        </h2>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger text-center shadow rounded-pill">
+            @TempData["Error"]
+        </div>
+    }
+
+    <div class="filtro-box shadow-sm">
+
+        <form method="get">
+
+            <label class="fw-bold mb-2 text-dark">
+                📅 Filtrar por fecha de reserva
+            </label>
+
+            <div class="d-flex gap-2 align-items-center">
+
+                <input type="date"
+                       name="fecha"
+                       value="@ViewBag.Fecha"
+                       class="form-control"
+                       style="max-width:250px;" />
+
+                <button type="submit" class="btn-purple">
+                    🔍 Filtrar
+                </button>
+
+                <a href="/Pago/Listar" class="btn-secondary-custom">
+                    Limpiar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="card card-pagos">
+
+        <table class="table table-hover mb-0">
+
+            <thead>
+                <tr>
+                    <th>Monto</th>
+                    <th>Método de Pago</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="monto">
+                                    S/ @item.Monto.ToString("0.00")
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="metodo">
+                                    💳 @item.MetodoPago
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" class="text-center text-muted py-4">
+                            No hay pagos registrados para esta fecha
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

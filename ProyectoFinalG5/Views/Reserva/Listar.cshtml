@@ -1,0 +1,340 @@
+﻿@model List<ProyectoFinalG5.Models.Reserva>
+
+@{
+    var rol = Context.Session.GetString("Rol");
+}
+
+<style>
+    /* Variables de Color - Paleta Monocromática / Negro Elegante */
+    :root {
+        --black-primary: #121212; /* Negro principal */
+        --black-hover: #2d2d2d; /* Negro para efectos hover */
+        --card-bg: #f8f9fa; /* Fondo gris muy suave para la tarjeta */
+        --row-even: #f1f3f5; /* Fondo alternado suave para filas */
+        --row-hover: #e9ecef; /* Hover sobre la fila */
+        --text-dark: #212529;
+    }
+
+    /* Encabezado */
+    .titulo {
+        color: var(--black-primary);
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        font-size: 1.75rem;
+    }
+
+    /* Tarjeta Principal con Fondo Cálido / Neutro */
+    .card-reservas {
+        border: 1px solid #dee2e6;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 24px;
+        background-color: var(--card-bg) !important;
+    }
+
+    /* Botón "Nueva Reserva" en Negro Elegante */
+    .btn-purple {
+        background: var(--black-primary) !important; /* Negro principal */
+        color: #ffffff !important;
+        border-radius: 50px;
+        padding: 10px 24px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 12px rgba(18, 18, 18, 0.3);
+        transition: all 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: none;
+    }
+
+        .btn-purple:hover {
+            background: var(--black-hover) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(45, 45, 45, 0.4);
+        }
+
+    /* Tabla con nuevo fondo */
+    .table-responsive {
+        overflow-x: auto;
+        border-radius: 14px;
+    }
+
+    .table {
+        margin-bottom: 0;
+        background-color: transparent;
+    }
+
+        /* Encabezado de la Tabla en Negro */
+        .table thead th {
+            background: var(--black-primary);
+            color: #ffffff;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 16px 12px;
+            border: none;
+        }
+
+        /* Filas con fondo suavizado */
+        .table tbody td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 14px 12px;
+            color: var(--text-dark);
+            font-size: 0.92rem;
+            border-bottom: 1px solid #e9ecef;
+            background-color: var(--card-bg);
+        }
+
+        /* Efecto intercalado (Zebrado) */
+        .table tbody tr:nth-child(even) td {
+            background-color: var(--row-even);
+        }
+
+        /* Hover en filas */
+        .table tbody tr:hover td {
+            background-color: var(--row-hover) !important;
+            transition: background-color 0.2s ease;
+        }
+
+    /* Badges / Insignias de Servicios en Tono Oscuro Neutro */
+    .badge-servicio {
+        background: #e9ecef;
+        color: #212529;
+        border: 1px solid #ced4da;
+        padding: 5px 14px;
+        border-radius: 50px;
+        display: inline-block;
+        margin: 2px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    /* Estados de Reserva */
+    .estado-pendiente {
+        background: #fef3d6;
+        color: #856404;
+        border: 1px solid #ffe8a1;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.82rem;
+        display: inline-block;
+    }
+
+    .estado-realizado {
+        background: #198754 !important; /* Verde sólido actualizado */
+        color: #ffffff !important; /* Texto blanco */
+        border: 1px solid #146c43 !important;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.82rem;
+        display: inline-block;
+    }
+
+    .estado-cancelado {
+        background: #f8d7da;
+        color: #842029;
+        border: 1px solid #f5c2c7;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.82rem;
+        display: inline-block;
+    }
+
+    /* Botones de Acción */
+    .btn-editar {
+        background: #ffc107;
+        color: #212529 !important;
+        padding: 6px 18px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.82rem;
+        transition: all 0.2s ease;
+        display: inline-block;
+        box-shadow: 0 2px 6px rgba(255, 193, 7, 0.3);
+    }
+
+        .btn-editar:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+        }
+
+    .btn-eliminar {
+        background: #dc3545;
+        color: #ffffff !important;
+        padding: 6px 18px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.82rem;
+        transition: all 0.2s ease;
+        display: inline-block;
+        box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+    }
+
+        .btn-eliminar:hover {
+            background: #bd2130;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+        }
+
+    .acciones-container {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+</style>
+
+<div class="container-fluid mt-4 px-4">
+
+    <!-- Encabezado de la Sección -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <h2 class="titulo m-0">
+            📅 Gestión de Reservas
+        </h2>
+
+        <a href="/Reserva/Nuevo" class="btn-purple">
+            <span>+</span> Nueva Reserva
+        </a>
+    </div>
+
+    <!-- Contenedor con Nuevo Fondo -->
+    <div class="card card-reservas">
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Empleado</th>
+                        <th>Fecha</th>
+                        <th>Horario</th>
+                        <th>Sala</th>
+                        <th>Servicios</th>
+                        <th>Pago</th>
+                        <th>Método</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@r.Cliente?.Nombre</strong>
+                            </td>
+
+                            <td>
+                                @r.Empleado?.Nombre
+                            </td>
+
+                            <td>
+                                @r.FechaReserva.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                <span class="fw-semibold">
+                                    @r.HorarioFijo?.HoraInicio.ToString(@"hh\:mm") - @r.HorarioFijo?.HoraFin.ToString(@"hh\:mm")
+                                </span>
+                            </td>
+
+                            <td>
+                                @r.SalaEstudio?.Nombre
+                            </td>
+
+                            <td>
+                                @if (r.ReservaServicios != null && r.ReservaServicios.Any())
+                                {
+                                    foreach (var s in r.ReservaServicios)
+                                    {
+                                        <span class="badge-servicio">
+                                            @s.Servicio?.Nombre
+                                        </span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Sin servicios</span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (r.Pago != null)
+                                {
+                                    <span class="text-success fw-bold">
+                                        S/ @r.Pago.Monto.ToString("0.00")
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Sin pago</span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (r.Pago != null && !string.IsNullOrEmpty(r.Pago.MetodoPago))
+                                {
+                                    <span class="badge bg-light text-dark border">
+                                        @r.Pago.MetodoPago
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Sin método</span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (r.Estado == "Pendiente")
+                                {
+                                    <span class="estado-pendiente">Pendiente</span>
+                                }
+                                else if (r.Estado == "Realizado")
+                                {
+                                    <span class="estado-realizado">Realizado</span>
+                                }
+                                else if (r.Estado == "Cancelado")
+                                {
+                                    <span class="estado-cancelado">Cancelado</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        @r.Estado
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (rol == "1" || rol == "2")
+                                {
+                                    <div class="acciones-container">
+                                        <a class="btn-editar" href="/Reserva/Editar/@r.IdReserva" title="Editar reserva">
+                                            Editar
+                                        </a>
+
+                                        <a class="btn-eliminar" href="/Reserva/Eliminar/@r.IdReserva" onclick="return confirm('¿Eliminar esta reserva?');" title="Eliminar reserva">
+                                            Eliminar
+                                        </a>
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

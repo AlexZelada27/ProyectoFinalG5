@@ -1,0 +1,27 @@
+﻿@model ProyectoFinalG5.Models.Cliente
+
+<h2 class="mb-4 text-danger">Eliminar Cliente</h2>
+
+<div class="card shadow p-4">
+
+    <h5>¿Estás seguro que deseas eliminar este cliente?</h5>
+
+    <hr />
+
+    <p><strong>Nombre:</strong> @Model.Nombre</p>
+
+    <form method="post">
+
+        <input type="hidden" name="IdCliente" value="@Model.IdCliente" />
+
+        <button type="submit" class="btn btn-danger">
+            Eliminar
+        </button>
+
+        <a href="/Cliente/Listar" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>

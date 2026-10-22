@@ -1,0 +1,27 @@
+﻿@model ProyectoFinalG5.Models.Empleado
+
+<form asp-action="Nuevo" method="post">
+
+    <input type="hidden" asp-for="Correo" />
+
+    <h2 class="mb-4">Registro de Empleado</h2>
+
+    <div class="card shadow p-4">
+
+        <div class="mb-3">
+            <label>Nombre</label>
+            <input asp-for="Nombre" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label>Cargo</label>
+            <input asp-for="Cargo" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Guardar y continuar
+        </button>
+
+    </div>
+
+</form>

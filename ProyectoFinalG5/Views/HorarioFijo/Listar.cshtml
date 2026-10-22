@@ -1,0 +1,182 @@
+﻿@model List<ProyectoFinalG5.Models.HorarioFijo>
+
+@{
+    var reservas = ViewBag.Reservas as List<ProyectoFinalG5.Models.Reserva>;
+    var fecha = ViewBag.Fecha;
+}
+
+<style>
+    /* Título "Zone Style" en Rojo Oficial */
+    .titulo {
+        color: #dc3545;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    /* Tarjeta contenedora limpia */
+    .card-horario {
+        background: #ffffff;
+        border: 1px solid #d0dbe7;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 18, 56, 0.25);
+        padding: 25px;
+    }
+
+    /* Caja de Filtros en tono Azul Claro Suave */
+    .filtro-box {
+        background: #eef4fc;
+        border: 1px solid #d0dbe7;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+    }
+
+    /* Botón Principal de Consulta en Azul Cápsula */
+    .btn-purple {
+        background: #0052d4;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0, 82, 212, 0.3);
+        transition: all 0.25s ease;
+    }
+
+        .btn-purple:hover {
+            background: #003db0;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 61, 176, 0.4);
+        }
+
+    .form-control {
+        border-radius: 50px;
+        padding: 10px 18px;
+        border: 1px solid #ced4da;
+    }
+
+    /* Cabecera de la tabla en Negro Elegante */
+    .table thead th {
+        background: #121212 !important;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        border: none;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+        text-align: center;
+        color: #2b2b2b;
+    }
+
+    /* Efecto hover suave en fila */
+    .table tbody tr:hover {
+        background: #eef4fc;
+        transition: .3s;
+    }
+
+    /* Badges de Disponibilidad */
+    .badge-disponible {
+        background: #198754;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    .badge-ocupado {
+        background: #dc3545;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline-block;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <h2 class="titulo mb-4">
+        🕒 Disponibilidad de Horarios
+    </h2>
+
+    <div class="filtro-box shadow-sm">
+
+        <form method="get">
+
+            <label class="form-label fw-bold text-dark">
+                📅 Seleccionar fecha
+            </label>
+
+            <div class="d-flex gap-3 align-items-center">
+
+                <input type="date"
+                       name="fecha"
+                       value="@fecha.ToString("yyyy-MM-dd")"
+                       class="form-control"
+                       style="max-width:250px;" />
+
+                <button type="submit" class="btn-purple">
+                    🔍 Consultar disponibilidad
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="card card-horario">
+
+        <table class="table table-hover mb-0">
+
+            <thead>
+                <tr>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    bool ocupado = reservas.Any(r => r.IdHorarioFijo == item.IdHorarioFijo);
+
+                    <tr>
+                        <td>
+                            🎙 @item.HoraInicio.ToString(@"hh\:mm")
+                        </td>
+
+                        <td>
+                            🕒 @item.HoraFin.ToString(@"hh\:mm")
+                        </td>
+
+                        <td>
+                            @if (ocupado)
+                            {
+                                <span class="badge-ocupado">
+                                    ❌ Ocupado
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge-disponible">
+                                    Disponible
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

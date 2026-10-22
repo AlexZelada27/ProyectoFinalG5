@@ -1,0 +1,106 @@
+﻿@model ProyectoFinalG5.ViewModels.UserVM
+
+@{
+    ViewData["Title"] = "Registro de Usuario";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh; position:relative; z-index:1;">
+
+    <div class="card shadow-lg" style="width: 420px; border-radius: 15px;">
+
+        <div class="card-body p-4">
+
+            <h3 class="text-center mb-4">Registro de Usuario</h3>
+
+            <form asp-action="Registro" method="post" id="formRegistro">
+
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                    <select asp-for="IdRol" class="form-select" id="rolSelect">
+
+                        <option value="">Seleccione un rol</option>
+
+                        @foreach (var r in ViewBag.Roles)
+                        {
+                            <option value="@r.IdRol"
+                                    selected="@(ViewBag.RolSeleccionado != null && (int)ViewBag.RolSeleccionado == r.IdRol)">
+                                @r.NombreRol
+                            </option>
+                        }
+
+                    </select>
+                    <span asp-validation-for="IdRol" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Correo electrónico</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger text-center p-2">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <button type="submit" class="btn btn-register w-100">
+                    Registrar
+                </button>
+
+            </form>
+
+            <hr />
+
+            <div class="text-center">
+                <small>¿Ya tienes cuenta?</small><br />
+                <a href="/Usuario/Login">Volver al Login</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-register {
+        background: #0052d4;
+        color: white;
+        font-weight: bold;
+        border-radius: 50px;
+        border: none;
+        padding: 10px 20px;
+        box-shadow: 0 4px 12px rgba(0, 82, 212, 0.3);
+        transition: all 0.25s ease;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+        .btn-register:hover {
+            background: #003db0;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 61, 176, 0.4);
+        }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.getElementById("rolSelect").addEventListener("change", function () {
+
+            if (this.value == "1") {
+                window.location.href = "/Usuario/VerificarAdmin?rol=" + this.value;
+            }
+
+        });
+    </script>
+}
